@@ -5,9 +5,9 @@ namespace Kata.Code.Chat
 {
     public class Message : IEquatable<Message>
     {
-        private readonly DateTime dateTime;
-        private readonly string user;
-        private readonly string message;
+        public readonly DateTime dateTime;
+        public readonly string user;
+        public readonly string message;
 
         public Message(DateTime dateTime, string user, string message)
         {

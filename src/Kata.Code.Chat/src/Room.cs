@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Kata.Code.Chat
 {
-    public class Room
+    public class Room : IRoom
     {
         public List<Message> Messages { get; }
 
