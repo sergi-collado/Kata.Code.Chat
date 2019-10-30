@@ -38,6 +38,11 @@ namespace Kata.Code.Chat.API
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+            services.AddCors(option =>
+            {
+                option.AddPolicy("AllowMyOrigin", 
+                    builder => builder.WithOrigins("http://localhost:4200"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +65,7 @@ namespace Kata.Code.Chat.API
             {
                 c.SwaggerEndpoint("/swagger/V1/swagger.json", "API Chat v1");
             });
+            app.UseCors("AllowMyOrigin");
         }
     }
 }

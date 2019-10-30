@@ -1,0 +1,10 @@
+<h2>My Messages</h2>
+<ul>
+  <li *ngFor="let message of messages">
+    <span>Message Date Time: {{message.messageDateTime}}</span><br>
+    <span>User: {{message.user}}</span><br>
+    <span>Content: {{message.content}}</span>
+  </li>
+</ul>
+
+<router-outlet></router-outlet>
