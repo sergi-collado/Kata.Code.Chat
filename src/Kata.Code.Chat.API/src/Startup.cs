@@ -24,11 +24,17 @@ namespace Kata.Code.Chat.API
         }
 
         public IConfiguration Configuration { get; }
+        readonly string myAllowSpecificOrigins = "AllowMyOrigin";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddCors(options =>
+            {
+                options.AddPolicy(myAllowSpecificOrigins,
+                    builder => builder.WithOrigins("http://localhost:4200"));
+            });
             services.AddScoped<IRoom, Room>();
             services.AddSwaggerGen(c =>
             {
@@ -37,11 +43,6 @@ namespace Kata.Code.Chat.API
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
-            });
-            services.AddCors(option =>
-            {
-                option.AddPolicy("AllowMyOrigin", 
-                    builder => builder.WithOrigins("http://localhost:4200"));
             });
         }
 
@@ -58,14 +59,14 @@ namespace Kata.Code.Chat.API
                 app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
-            app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/V1/swagger.json", "API Chat v1");
             });
-            app.UseCors("AllowMyOrigin");
+            app.UseHttpsRedirection();
+            app.UseMvc();
+            app.UseCors(myAllowSpecificOrigins);
         }
     }
 }
