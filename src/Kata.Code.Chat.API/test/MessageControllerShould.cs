@@ -6,6 +6,7 @@ using FluentAssertions;
 using Kata.Code.Chat.API.Controllers;
 using Kata.Code.Chat.API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Xunit;
 
@@ -18,9 +19,10 @@ namespace Kata.Code.Chat.API.UnitTests
         {
             //Arrange
             var room = Substitute.For<IRoom>();
+            var log = Substitute.For<ILogger<MessageController>>();
             room.Messages.Returns(new List<Message> {new Message(dte, user, content)});
             var expectedMessage = new V1.Message(){ MessageDateTime = dte, User = user, Content = content};
-            var controller = new MessageController(room);
+            var controller = new MessageController(log, room);
 
             //Act
             var result = await controller.Get();
