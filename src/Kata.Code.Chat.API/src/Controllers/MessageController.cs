@@ -15,19 +15,23 @@ namespace Kata.Code.Chat.API.Controllers
     {
         private readonly ILogger<MessageController> logger;
         private readonly IRoom room;
+        private readonly IMessageRepository messageRepository;
 
-        public MessageController(ILogger<MessageController> logger, IRoom room)
+        public MessageController(ILogger<MessageController> logger, IRoom room, IMessageRepository messageRepository)
         {
             this.logger = logger;
             this.room = room;
+            this.messageRepository = messageRepository;
         }
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<V1.Message>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Get()
         {
+            var messages = await messageRepository.GetMessages();
+            room.AddMessages(messages.ToList());
             logger.LogInformation("This is the {number} log", "first");
-            return Ok(room.Messages.Select(m => m.ToDto()));
+            return Ok(room.Messages.ConvertAll(m => m.ToDto()));
         }
     }
 }

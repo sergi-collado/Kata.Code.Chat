@@ -6,5 +6,6 @@ namespace Kata.Code.Chat
     {
         List<Message> Messages { get; }
         void AddMessage(string user, string content);
+        void AddMessages(List<Message> messages);
     }
 }

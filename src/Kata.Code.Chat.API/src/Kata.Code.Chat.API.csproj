@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Kata.Code.Chat\src\Kata.Code.Chat.csproj" />
+    <ProjectReference Include="..\..\Kata.Code.Chat.DataAccess\src\Kata.Code.Chat.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

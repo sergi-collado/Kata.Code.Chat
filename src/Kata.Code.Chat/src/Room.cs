@@ -21,5 +21,10 @@ namespace Kata.Code.Chat
         {
             Messages.Add(new Message(utc.Now(), user, content));
         }
+
+        public void AddMessages(List<Message> messages)
+        {
+            Messages.AddRange(messages);
+        }
     }
 }
