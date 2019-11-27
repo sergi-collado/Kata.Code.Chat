@@ -8,6 +8,7 @@ using Hangfire;
 using Hangfire.PostgreSql;
 using Kata.Code.Chat.API.Services;
 using Kata.Code.Chat.DataAccess;
+using Kata.Code.Chat.DataAccess.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -87,7 +88,9 @@ namespace Kata.Code.Chat.API
             });
             services.AddScoped<IRoom, Room>();
             services.AddSingleton<IUtc, utc>();
-            services.AddScoped<IMessageRepository, IMessageRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddTransient(serviceProvider =>
+                Configuration.GetSection("ConnectionStrings").Get<DatabaseSettings>());
 
             services.AddSwaggerGen(c =>
             {

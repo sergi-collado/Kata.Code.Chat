@@ -16,5 +16,10 @@ namespace Kata.Code.Chat.API.Models
                 Content = message.message
             };
         }
+
+        public static Message ToEntity(this V1.Message message)
+        {
+            return new Message(message.MessageDateTime, message.User, message.Content);
+        }
     }
 }

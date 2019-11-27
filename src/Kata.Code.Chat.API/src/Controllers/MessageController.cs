@@ -33,5 +33,13 @@ namespace Kata.Code.Chat.API.Controllers
             logger.LogInformation("This is the {number} log", "first");
             return Ok(room.Messages.ConvertAll(m => m.ToDto()));
         }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> Post([FromBody] V1.Message message)
+        {
+            await messageRepository.SaveMessage(message.ToEntity());
+            return Created("api/[controller]", message);
+        }
     }
 }

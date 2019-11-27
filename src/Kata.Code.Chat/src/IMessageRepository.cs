@@ -7,5 +7,6 @@ namespace Kata.Code.Chat
     public interface IMessageRepository
     {
         Task<IEnumerable<Message>> GetMessages();
+        Task SaveMessage(Message message);
     }
 }
